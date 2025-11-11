@@ -3,6 +3,7 @@
 Professional LinkedIn Portrait Generator with Škoda GCC Branded Hoodies
 
 ![Škoda Auto](https://img.shields.io/badge/Škoda-Auto-4BA82E?style=for-the-badge)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react)
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-3.0-000000?style=for-the-badge&logo=flask)
@@ -10,6 +11,31 @@ Professional LinkedIn Portrait Generator with Škoda GCC Branded Hoodies
 ## 🎯 Overview
 
 This application allows users to generate professional LinkedIn-style portraits featuring Škoda GCC branded hoodies. The app supports three hoodie color variants (green, black, white) and uses AI technology to create high-quality corporate headshots.
+
+## 📦 Two Versions Available
+
+### 🚀 **Standalone Version** (RECOMMENDED for most users)
+**Zero installation required!** Just open `index.html` in your browser.
+
+- ✅ **One HTML file** - No installation, no setup
+- ✅ **Works anywhere** - Desktop, laptop, tablet, mobile
+- ✅ **Offline capable** - No internet needed after first load
+- ✅ **Privacy-first** - All processing in your browser
+- ✅ **Easy deployment** - Upload to any website or share via email
+
+**👉 [See Standalone Documentation](README_STANDALONE.md)**
+
+### ⚡ **Full Version** (Advanced features)
+Professional development stack with backend API and AI integration.
+
+- 🤖 **Advanced AI** - Replicate API integration for better results
+- 🏗️ **Modern stack** - React + TypeScript + Flask
+- 🔧 **Customizable** - Full control over functionality
+- 📊 **Scalable** - Multi-user server deployment
+
+**👉 Continue reading below for full version setup**
+
+---
 
 ## ✨ Features
 
@@ -23,6 +49,15 @@ This application allows users to generate professional LinkedIn-style portraits 
 
 ## 🏗️ Architecture
 
+### Standalone Version
+```
+Hoodie/
+├── index.html                  # ⭐ STANDALONE APP - Just open this!
+├── README_STANDALONE.md        # Standalone documentation
+└── HOODIE_IMAGES_GUIDE.md     # Guide for creating hoodie images
+```
+
+### Full Version (Advanced)
 ```
 Hoodie/
 ├── backend/              # Flask API Server
@@ -49,7 +84,21 @@ Hoodie/
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### 🎯 Standalone Version (Recommended)
+
+**No prerequisites needed!** Just:
+
+1. Open `index.html` in any modern web browser
+2. Upload hoodie images in Admin Panel (one-time setup)
+3. Start generating portraits!
+
+👉 **[Full Standalone Guide →](README_STANDALONE.md)**
+
+---
+
+### ⚡ Full Version Setup (Advanced)
+
+**Prerequisites:**
 
 - **Node.js** 18+ and npm
 - **Python** 3.9+
