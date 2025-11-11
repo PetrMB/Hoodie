@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP GCC Hoodie Photo Booth - Škoda Auto (AI Enhanced)</title>
+    <style>
+        /* Škoda Auto Corporate Identity Colors */
+        :root {
+            --skoda-green: #4BA82E;
+            --skoda-green-dark: #3d8a25;
+            --skoda-green-light: #5bc236;
+            --skoda-black: #000000;
+            --skoda-white: #FFFFFF;
+            --skoda-grey-light: #F5F5F5;
+            --skoda-grey: #CCCCCC;
+            --skoda-grey-dark: #666666;
+            --skoda-text: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, var(--skoda-grey-light) 0%, var(--skoda-white) 100%);
+            color: var(--skoda-text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--skoda-black) 0%, var(--skoda-grey-dark) 100%);
+            color: var(--skoda-white);
+            padding: 32px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--skoda-green);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .skoda-logo {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .brand-divider {
+            width: 2px;
+            height: 40px;
+            background: var(--skoda-green);
+        }
+
+        .app-title {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .app-subtitle {
+            font-size: 18px;
+            color: var(--skoda-grey);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+
+        /* Card */
+        .card {
+            background: var(--skoda-white);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        /* Instructions */
+        .instructions-toggle {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--skoda-green);
+            color: var(--skoda-white);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .instructions-toggle:hover {
+            background: var(--skoda-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .instructions-content {
+            display: none;
+            margin-top: 24px;
+        }
+
+        .instructions-content.show {
+            display: block;
+        }
+
+        .instructions-header h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .instruction-card {
+            background: var(--skoda-grey-light);
+            border-radius: 12px;
+            padding: 24px;
+            border-left: 4px solid var(--skoda-green);
+        }
+
+        .instruction-card h3 {
+            color: var(--skoda-green);
+            margin-bottom: 12px;
+        }
+
+        .instruction-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instruction-card li {
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .instruction-card li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: var(--skoda-green);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Workflow */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .workflow-step {
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -16px;
+            left: 24px;
+            background: var(--skoda-green);
+            color: var(--skoda-white);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            margin-top: 8px;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 3px dashed var(--skoda-grey);
+            border-radius: 12px;
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--skoda-grey-light);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--skoda-green);
+            background: var(--skoda-white);
+        }
+
+        .upload-zone.drag-active {
+            border-color: var(--skoda-green);
+            background: rgba(75, 168, 46, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+
+        /* Color Selector */
+        .color-options {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px;
+            background: var(--skoda-grey-light);
+            border: 3px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+        }
+
+        .color-option:hover:not(.unavailable) {
+            background: var(--skoda-white);
+            border-color: var(--skoda-green);
+            transform: translateY(-4px);
+        }
+
+        .color-option.selected {
+            background: var(--skoda-white);
+            border-color: var(--skoda-green);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .color-option.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .color-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 32px;
+        }
+
+        .hoodie-preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 16px;
+        }
+
+        /* Button */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--skoda-green);
+            color: var(--skoda-white);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:hover {
+            background: var(--skoda-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--skoda-white);
+            color: var(--skoda-green);
+            border: 2px solid var(--skoda-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--skoda-green);
+            color: var(--skoda-white);
+        }
+
+        .btn-large {
+            font-size: 18px;
+            padding: 16px 32px;
+            min-width: 300px;
+        }
+
+        .generate-section {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .generate-section .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Textarea */
+        textarea, input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--skoda-grey);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--skoda-green);
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .suggestion-chip {
+            background: var(--skoda-grey-light);
+            border: 1px solid var(--skoda-grey);
+            color: var(--skoda-text);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-chip:hover {
+            background: var(--skoda-green);
+            color: var(--skoda-white);
+            border-color: var(--skoda-green);
+        }
+
+        /* Result */
+        .result-image {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            margin: 24px 0;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            border: 2px solid var(--skoda-grey);
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--skoda-grey-dark);
+            font-size: 14px;
+        }
+
+        select, input[type="file"] {
+            padding: 12px;
+            border: 2px solid var(--skoda-grey);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--skoda-white);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--skoda-green);
+        }
+
+        .ai-provider-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .ai-provider-badge.active {
+            background: var(--skoda-green);
+            color: white;
+        }
+
+        .ai-provider-badge.inactive {
+            background: var(--skoda-grey);
+            color: white;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--skoda-black);
+            color: var(--skoda-white);
+            padding: 32px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-section {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .brand-divider {
+                display: none;
+            }
+
+            .app-title {
+                font-size: 24px;
+            }
+
+            .workflow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-large {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="skoda-logo">ŠKODA</div>
+                    <div class="brand-divider"></div>
+                    <h1 class="app-title">SAP GCC Hoodie Photo Booth</h1>
+                </div>
+                <p class="app-subtitle">
+                    Professional LinkedIn Portrait Generator
+                    <span id="ai-status-badge" class="ai-provider-badge inactive">Canvas Mode</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- AI Configuration Alert -->
+            <div id="ai-config-alert" class="alert alert-warning">
+                🤖 <strong>AI Enhancement Available!</strong> Configure an AI API key in the Admin Panel below for professional-quality portrait generation using Fal.ai or Replicate.com. Without an API key, basic canvas composition will be used.
+            </div>
+
+            <!-- Instructions -->
+            <div class="card">
+                <button class="instructions-toggle" onclick="toggleInstructions()">
+                    <span id="instructions-icon">▼</span> Instructions
+                </button>
+                <div class="instructions-content show" id="instructions-content">
+                    <div class="instructions-header">
+                        <h2>📚 How to Use This Photo Booth</h2>
+                    </div>
+                    <div class="instructions-grid">
+                        <div class="instruction-card">
+                            <h3>1. Upload Your Photo</h3>
+                            <ul>
+                                <li>Click or drag & drop your face photo</li>
+                                <li>Use a clear, front-facing photo</li>
+                                <li>Ensure good lighting</li>
+                                <li>Neutral background preferred</li>
+                            </ul>
+                        </div>
+                        <div class="instruction-card">
+                            <h3>2. Select Hoodie Color</h3>
+                            <ul>
+                                <li>Choose from green, black, or white</li>
+                                <li>Preview your selection</li>
+                                <li>Upload hoodies in Admin Panel first</li>
+                            </ul>
+                        </div>
+                        <div class="instruction-card">
+                            <h3>3. Generate & Download</h3>
+                            <ul>
+                                <li>Add optional custom instructions</li>
+                                <li>Click "Generate Portrait"</li>
+                                <li>Download your professional portrait</li>
+                                <li>Use on LinkedIn!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow -->
+            <div class="workflow-grid">
+                <!-- Step 1: Upload Photo -->
+                <div class="workflow-step">
+                    <div class="card">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Upload Your Photo</h2>
+                        <div id="photo-upload">
+                            <div class="upload-zone" id="upload-zone" onclick="document.getElementById('face-input').click()">
+                                <div class="upload-icon">📸</div>
+                                <p><strong>Click to upload</strong> or drag and drop</p>
+                                <p style="font-size: 14px; color: var(--skoda-grey-dark);">PNG, JPG or JPEG (max 10MB)</p>
+                            </div>
+                            <input type="file" id="face-input" accept="image/*" style="display: none;" onchange="handleFaceUpload(event)">
+                            <div id="face-preview" class="hidden" style="text-align: center;">
+                                <img id="face-preview-img" class="preview-image">
+                                <br>
+                                <button class="btn btn-secondary" onclick="document.getElementById('face-input').click()">📷 Change Photo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Select Hoodie -->
+                <div class="workflow-step">
+                    <div class="card">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">Choose Hoodie Color</h2>
+                        <div class="color-options">
+                            <div class="color-option" id="color-green" onclick="selectColor('green')">
+                                <div class="color-circle" style="background-color: #4BA82E;"></div>
+                                <span>Green</span>
+                            </div>
+                            <div class="color-option" id="color-black" onclick="selectColor('black')">
+                                <div class="color-circle" style="background-color: #000000;"></div>
+                                <span>Black</span>
+                            </div>
+                            <div class="color-option" id="color-white" onclick="selectColor('white')">
+                                <div class="color-circle" style="background-color: #FFFFFF; border: 2px solid var(--skoda-grey);"></div>
+                                <span>White</span>
+                            </div>
+                        </div>
+                        <div id="hoodie-preview" class="hidden" style="text-align: center;">
+                            <h4 style="margin-top: 24px; margin-bottom: 12px;">Selected Hoodie Preview:</h4>
+                            <img id="hoodie-preview-img" class="hoodie-preview-img">
+                        </div>
+                        <div id="no-hoodie-message" class="alert alert-info hidden">
+                            ⚠️ This hoodie color hasn't been uploaded yet. Please use the Admin Panel below.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Adjust Prompt -->
+                <div class="workflow-step">
+                    <div class="card">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Fine-tune (Optional)</h2>
+                        <div class="form-group">
+                            <label>Additional Instructions:</label>
+                            <textarea id="prompt-adjustment" placeholder="e.g., smiling, professional look, slight tilt..."></textarea>
+                        </div>
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip" onclick="addSuggestion('smiling')">+ smiling</button>
+                            <button class="suggestion-chip" onclick="addSuggestion('serious professional look')">+ serious professional look</button>
+                            <button class="suggestion-chip" onclick="addSuggestion('slight smile')">+ slight smile</button>
+                            <button class="suggestion-chip" onclick="addSuggestion('confident expression')">+ confident expression</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div id="alert-container"></div>
+
+            <!-- Generate Button -->
+            <div class="card generate-section">
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-large" id="generate-btn" onclick="generatePortrait()">
+                        🎨 Generate LinkedIn Portrait
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetForm()">🔄 Start Over</button>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div id="result-section" class="card hidden">
+                <h2 style="text-align: center; margin-bottom: 16px;">🎉 Your Professional Portrait is Ready!</h2>
+                <p style="text-align: center; color: var(--skoda-grey-dark); margin-bottom: 24px;">
+                    Download and use it on LinkedIn, your email signature, or company directory
+                </p>
+                <div style="text-align: center;">
+                    <img id="result-img" class="result-image">
+                    <br><br>
+                    <button class="btn btn-primary btn-large" onclick="downloadResult()">⬇️ Download Portrait</button>
+                </div>
+            </div>
+
+            <!-- Admin Panel -->
+            <div class="card admin-panel">
+                <h3 style="text-align: center; margin-bottom: 24px;">⚙️ Admin Panel</h3>
+
+                <!-- AI Configuration -->
+                <div style="background: rgba(75, 168, 46, 0.05); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+                    <h4 style="margin-bottom: 16px;">🤖 AI Configuration (Optional - for Professional Quality)</h4>
+                    <div class="admin-form">
+                        <div class="form-group">
+                            <label>AI Provider:</label>
+                            <select id="ai-provider" onchange="updateAIConfig()">
+                                <option value="canvas">Canvas Only (No AI - Basic Quality)</option>
+                                <option value="fal">Fal.ai (Recommended - Best for Browser)</option>
+                                <option value="replicate">Replicate.com (High Quality)</option>
+                                <option value="huggingface">HuggingFace (Free Tier Available)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="api-key-group">
+                            <label>API Key:</label>
+                            <input type="password" id="api-key" placeholder="Enter your API key (stored locally in browser)">
+                            <small style="color: var(--skoda-grey-dark); font-size: 13px;">
+                                Your API key is stored only in your browser's localStorage and never sent to any server except the AI provider you choose.
+                            </small>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveAIConfig()">💾 Save AI Configuration</button>
+                        <div id="ai-config-status"></div>
+                    </div>
+
+                    <div style="margin-top: 16px; padding: 16px; background: white; border-radius: 8px;">
+                        <h5 style="margin-bottom: 12px; color: var(--skoda-grey-dark);">Get API Keys:</h5>
+                        <ul style="font-size: 14px; color: var(--skoda-text);">
+                            <li style="padding: 4px 0;"><strong>Fal.ai:</strong> <a href="https://fal.ai/dashboard/keys" target="_blank">https://fal.ai/dashboard/keys</a> (Recommended)</li>
+                            <li style="padding: 4px 0;"><strong>Replicate:</strong> <a href="https://replicate.com/account/api-tokens" target="_blank">https://replicate.com/account/api-tokens</a></li>
+                            <li style="padding: 4px 0;"><strong>HuggingFace:</strong> <a href="https://huggingface.co/settings/tokens" target="_blank">https://huggingface.co/settings/tokens</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Hoodie Upload -->
+                <div style="background: var(--skoda-grey-light); padding: 24px; border-radius: 12px;">
+                    <h4 style="margin-bottom: 16px;">👕 Upload Hoodie Images (One-time Setup)</h4>
+                    <p style="color: var(--skoda-grey-dark); margin-bottom: 16px; font-size: 14px;">
+                        Upload JPG images of Škoda GCC hoodies for each color variant
+                    </p>
+                    <div class="admin-form">
+                        <div class="form-group">
+                            <label>Select Hoodie Color:</label>
+                            <select id="admin-color">
+                                <option value="green">🟢 Green</option>
+                                <option value="black">⚫ Black</option>
+                                <option value="white">⚪ White</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Hoodie Image (JPG):</label>
+                            <input type="file" id="hoodie-input" accept=".jpg,.jpeg,image/jpeg">
+                        </div>
+                        <div id="admin-preview" class="hidden" style="text-align: center;">
+                            <img id="admin-preview-img" style="max-width: 300px; max-height: 300px; border-radius: 8px; margin: 16px 0;">
+                        </div>
+                        <button class="btn btn-primary" onclick="uploadHoodie()">⬆️ Upload Hoodie</button>
+                        <div id="admin-alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Škoda Auto a.s. | SAP GCC Hoodie Photo Booth</p>
+            <p style="font-size: 14px; color: var(--skoda-grey);">
+                Powered by AI | Professional LinkedIn Portrait Generator
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Global State
+        let faceImage = null;
+        let selectedColor = 'green';
+        let hoodies = {};
+        let aiConfig = {
+            provider: 'canvas',
+            apiKey: ''
+        };
+
+        // IndexedDB Setup
+        let db;
+        const DB_NAME = 'HoodiePhotoBooth';
+        const DB_VERSION = 1;
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains('hoodies')) {
+                        db.createObjectStore('hoodies', { keyPath: 'color' });
+                    }
+                };
+            });
+        }
+
+        async function saveHoodie(color, imageData) {
+            const transaction = db.transaction(['hoodies'], 'readwrite');
+            const store = transaction.objectStore('hoodies');
+            await store.put({ color, imageData });
+        }
+
+        async function getHoodie(color) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['hoodies'], 'readonly');
+                const store = transaction.objectStore('hoodies');
+                const request = store.get(color);
+
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function loadAllHoodies() {
+            const colors = ['green', 'black', 'white'];
+            for (const color of colors) {
+                const hoodie = await getHoodie(color);
+                if (hoodie) {
+                    hoodies[color] = hoodie.imageData;
+                }
+            }
+            updateColorOptions();
+        }
+
+        function updateColorOptions() {
+            ['green', 'black', 'white'].forEach(color => {
+                const element = document.getElementById(`color-${color}`);
+                if (hoodies[color]) {
+                    element.classList.remove('unavailable');
+                } else {
+                    element.classList.add('unavailable');
+                }
+            });
+        }
+
+        // AI Configuration
+        function loadAIConfig() {
+            const saved = localStorage.getItem('aiConfig');
+            if (saved) {
+                aiConfig = JSON.parse(saved);
+                document.getElementById('ai-provider').value = aiConfig.provider;
+                document.getElementById('api-key').value = aiConfig.apiKey;
+                updateAIStatus();
+            }
+        }
+
+        function updateAIConfig() {
+            const provider = document.getElementById('ai-provider').value;
+            if (provider === 'canvas') {
+                document.getElementById('api-key-group').style.display = 'none';
+            } else {
+                document.getElementById('api-key-group').style.display = 'block';
+            }
+        }
+
+        function saveAIConfig() {
+            aiConfig.provider = document.getElementById('ai-provider').value;
+            aiConfig.apiKey = document.getElementById('api-key').value;
+
+            localStorage.setItem('aiConfig', JSON.stringify(aiConfig));
+
+            showAIConfigAlert('AI configuration saved successfully!', 'success');
+            updateAIStatus();
+        }
+
+        function updateAIStatus() {
+            const badge = document.getElementById('ai-status-badge');
+            const alert = document.getElementById('ai-config-alert');
+
+            if (aiConfig.provider !== 'canvas' && aiConfig.apiKey) {
+                badge.className = 'ai-provider-badge active';
+                badge.textContent = `AI: ${aiConfig.provider}`;
+                alert.style.display = 'none';
+            } else {
+                badge.className = 'ai-provider-badge inactive';
+                badge.textContent = 'Canvas Mode';
+                if (aiConfig.provider === 'canvas') {
+                    alert.style.display = 'none';
+                }
+            }
+        }
+
+        function showAIConfigAlert(message, type) {
+            const container = document.getElementById('ai-config-status');
+            container.className = `alert alert-${type}`;
+            container.textContent = (type === 'error' ? '❌ ' : '✅ ') + message;
+            setTimeout(() => {
+                container.className = '';
+                container.textContent = '';
+            }, 5000);
+        }
+
+        // Instructions Toggle
+        function toggleInstructions() {
+            const content = document.getElementById('instructions-content');
+            const icon = document.getElementById('instructions-icon');
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                icon.textContent = '▶';
+            } else {
+                content.classList.add('show');
+                icon.textContent = '▼';
+            }
+        }
+
+        // Face Upload
+        function handleFaceUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showAlert('Please upload an image file', 'error');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert('File size must be less than 10MB', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                faceImage = e.target.result;
+                document.getElementById('upload-zone').classList.add('hidden');
+                document.getElementById('face-preview').classList.remove('hidden');
+                document.getElementById('face-preview-img').src = faceImage;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Drag and Drop
+        const uploadZone = document.getElementById('upload-zone');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('drag-active');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('drag-active');
+            });
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                const input = document.getElementById('face-input');
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+                handleFaceUpload({ target: input });
+            }
+        });
+
+        // Color Selection
+        function selectColor(color) {
+            if (!hoodies[color]) {
+                showAlert(`${color} hoodie not uploaded yet. Please upload it in Admin Panel first.`, 'error');
+                document.getElementById('no-hoodie-message').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('no-hoodie-message').classList.add('hidden');
+            selectedColor = color;
+
+            // Update UI
+            ['green', 'black', 'white'].forEach(c => {
+                document.getElementById(`color-${c}`).classList.remove('selected');
+            });
+            document.getElementById(`color-${color}`).classList.add('selected');
+
+            // Show preview
+            document.getElementById('hoodie-preview').classList.remove('hidden');
+            document.getElementById('hoodie-preview-img').src = hoodies[color];
+        }
+
+        // Suggestion Chips
+        function addSuggestion(text) {
+            const textarea = document.getElementById('prompt-adjustment');
+            const current = textarea.value.trim();
+            textarea.value = current ? `${current}, ${text}` : text;
+        }
+
+        // Generate Portrait
+        async function generatePortrait() {
+            if (!faceImage) {
+                showAlert('Please upload a face photo first', 'error');
+                return;
+            }
+
+            if (!hoodies[selectedColor]) {
+                showAlert(`Please upload ${selectedColor} hoodie first`, 'error');
+                return;
+            }
+
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Generating Portrait...';
+
+            try {
+                let result;
+
+                if (aiConfig.provider !== 'canvas' && aiConfig.apiKey) {
+                    // Use AI API
+                    showAlert(`Using ${aiConfig.provider} AI for professional portrait generation...`, 'info');
+                    result = await generateWithAI(faceImage, hoodies[selectedColor]);
+                } else {
+                    // Use Canvas fallback
+                    showAlert('Using canvas composition (for AI-powered generation, configure API in Admin Panel)', 'info');
+                    result = await createCompositeImage(faceImage, hoodies[selectedColor]);
+                }
+
+                // Show result
+                document.getElementById('result-img').src = result;
+                document.getElementById('result-section').classList.remove('hidden');
+                document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+
+                showAlert('Portrait generated successfully!', 'success');
+            } catch (error) {
+                showAlert('Failed to generate portrait: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🎨 Generate LinkedIn Portrait';
+            }
+        }
+
+        async function generateWithAI(faceImgData, hoodieImgData) {
+            const promptAdjustment = document.getElementById('prompt-adjustment').value;
+
+            const basePrompt = `Professional LinkedIn-style corporate portrait photograph.
+Person wearing a ${selectedColor} Škoda GCC branded hoodie with clean company logo on chest.
+Studio lighting, professional photography, high quality, corporate headshot style.
+Neutral background, well-lit face, professional appearance, business casual style.
+Sharp focus, professional corporate portrait. ${promptAdjustment}`;
+
+            switch (aiConfig.provider) {
+                case 'fal':
+                    return await generateWithFal(faceImgData, hoodieImgData, basePrompt);
+                case 'replicate':
+                    return await generateWithReplicate(faceImgData, hoodieImgData, basePrompt);
+                case 'huggingface':
+                    return await generateWithHuggingFace(faceImgData, hoodieImgData, basePrompt);
+                default:
+                    throw new Error('Unknown AI provider');
+            }
+        }
+
+        async function generateWithFal(faceImg, hoodieImg, prompt) {
+            showAlert('Connecting to Fal.ai...', 'info');
+
+            try {
+                const response = await fetch('https://fal.run/fal-ai/face-to-sticker', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Key ${aiConfig.apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        image_url: faceImg,
+                        prompt: prompt
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Fal.ai API request failed');
+                }
+
+                const result = await response.json();
+                return result.image?.url || result.images?.[0]?.url || createCompositeImage(faceImg, hoodieImg);
+            } catch (error) {
+                console.error('Fal.ai error:', error);
+                showAlert('AI generation failed, falling back to canvas mode', 'warning');
+                return createCompositeImage(faceImg, hoodieImg);
+            }
+        }
+
+        async function generateWithReplicate(faceImg, hoodieImg, prompt) {
+            showAlert('Note: Replicate requires server-side implementation. Falling back to canvas mode.', 'warning');
+            return createCompositeImage(faceImg, hoodieImg);
+        }
+
+        async function generateWithHuggingFace(faceImg, hoodieImg, prompt) {
+            showAlert('Connecting to HuggingFace...', 'info');
+
+            try {
+                const response = await fetch('https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${aiConfig.apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        inputs: prompt
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('HuggingFace API request failed');
+                }
+
+                const blob = await response.blob();
+                return URL.createObjectURL(blob);
+            } catch (error) {
+                console.error('HuggingFace error:', error);
+                showAlert('AI generation failed, falling back to canvas mode', 'warning');
+                return createCompositeImage(faceImg, hoodieImg);
+            }
+        }
+
+        async function createCompositeImage(faceImgData, hoodieImgData) {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Set canvas size
+                canvas.width = 800;
+                canvas.height = 800;
+
+                // Draw background
+                ctx.fillStyle = '#F5F5F5';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const faceImg = new Image();
+                const hoodieImg = new Image();
+
+                let loadedCount = 0;
+
+                faceImg.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === 2) drawComposite();
+                };
+
+                hoodieImg.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === 2) drawComposite();
+                };
+
+                faceImg.onerror = () => reject(new Error('Failed to load face image'));
+                hoodieImg.onerror = () => reject(new Error('Failed to load hoodie image'));
+
+                function drawComposite() {
+                    // Draw face (centered, scaled to fit)
+                    const faceScale = Math.min(600 / faceImg.width, 600 / faceImg.height);
+                    const faceWidth = faceImg.width * faceScale;
+                    const faceHeight = faceImg.height * faceScale;
+                    const faceX = (canvas.width - faceWidth) / 2;
+                    const faceY = 50;
+
+                    ctx.drawImage(faceImg, faceX, faceY, faceWidth, faceHeight);
+
+                    // Draw hoodie reference (bottom right corner)
+                    const hoodieScale = 150 / Math.max(hoodieImg.width, hoodieImg.height);
+                    const hoodieWidth = hoodieImg.width * hoodieScale;
+                    const hoodieHeight = hoodieImg.height * hoodieScale;
+                    const hoodieX = canvas.width - hoodieWidth - 20;
+                    const hoodieY = canvas.height - hoodieHeight - 20;
+
+                    ctx.drawImage(hoodieImg, hoodieX, hoodieY, hoodieWidth, hoodieHeight);
+
+                    // Add text overlay
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillStyle = '#4BA82E';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('Škoda GCC Portrait', 20, canvas.height - 20);
+
+                    resolve(canvas.toDataURL('image/jpeg', 0.9));
+                }
+
+                faceImg.src = faceImgData;
+                hoodieImg.src = hoodieImgData;
+            });
+        }
+
+        // Download Result
+        function downloadResult() {
+            const img = document.getElementById('result-img').src;
+            const link = document.createElement('a');
+            link.href = img;
+            link.download = `skoda_gcc_portrait_${Date.now()}.jpg`;
+            link.click();
+        }
+
+        // Reset Form
+        function resetForm() {
+            faceImage = null;
+            document.getElementById('face-input').value = '';
+            document.getElementById('upload-zone').classList.remove('hidden');
+            document.getElementById('face-preview').classList.add('hidden');
+            document.getElementById('prompt-adjustment').value = '';
+            document.getElementById('result-section').classList.add('hidden');
+            clearAlerts();
+        }
+
+        // Admin: Upload Hoodie
+        async function uploadHoodie() {
+            const color = document.getElementById('admin-color').value;
+            const fileInput = document.getElementById('hoodie-input');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showAdminAlert('Please select a file', 'error');
+                return;
+            }
+
+            if (!file.type.match('image/jpeg')) {
+                showAdminAlert('Please upload a JPG/JPEG file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const imageData = e.target.result;
+
+                // Save to IndexedDB
+                await saveHoodie(color, imageData);
+                hoodies[color] = imageData;
+
+                // Update UI
+                updateColorOptions();
+                showAdminAlert(`${color} hoodie uploaded successfully!`, 'success');
+
+                // Reset form
+                fileInput.value = '';
+                document.getElementById('admin-preview').classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Admin Preview
+        document.getElementById('hoodie-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('admin-preview').classList.remove('hidden');
+                    document.getElementById('admin-preview-img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Alerts
+        function showAlert(message, type) {
+            const container = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            alert.textContent = `${icon} ${message}`;
+            container.innerHTML = '';
+            container.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        function showAdminAlert(message, type) {
+            const container = document.getElementById('admin-alert');
+            container.className = `alert alert-${type}`;
+            container.textContent = (type === 'error' ? '❌ ' : '✅ ') + message;
+            setTimeout(() => {
+                container.className = '';
+                container.textContent = '';
+            }, 5000);
+        }
+
+        function clearAlerts() {
+            document.getElementById('alert-container').innerHTML = '';
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', async () => {
+            await initDB();
+            await loadAllHoodies();
+            loadAIConfig();
+            updateAIConfig();
+
+            // Select green by default if available
+            if (hoodies['green']) {
+                selectColor('green');
+            }
+        });
+    </script>
+</body>
+</html>
