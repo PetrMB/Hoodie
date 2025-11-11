@@ -1,0 +1,62 @@
+.prompt-adjustment {
+  width: 100%;
+}
+
+.input-hint {
+  color: var(--skoda-grey-dark);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.suggestions {
+  margin-top: 16px;
+}
+
+.suggestions-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--skoda-grey-dark);
+  margin-bottom: 8px;
+}
+
+.suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestion-chip {
+  background: var(--skoda-grey-light);
+  border: 1px solid var(--skoda-grey);
+  color: var(--skoda-text);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.suggestion-chip:hover {
+  background: var(--skoda-green);
+  color: var(--skoda-white);
+  border-color: var(--skoda-green);
+  transform: translateY(-2px);
+}
+
+.suggestion-chip:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .suggestion-chips {
+    gap: 6px;
+  }
+
+  .suggestion-chip {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}

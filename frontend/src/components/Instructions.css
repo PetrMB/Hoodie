@@ -1,0 +1,217 @@
+.instructions {
+  margin: 32px 0;
+}
+
+.instructions-toggle {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--skoda-green);
+  color: var(--skoda-white);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.instructions-toggle:hover {
+  background: var(--skoda-green-dark);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.toggle-icon {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.instructions-content {
+  margin-top: 24px;
+  background: var(--skoda-white);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+}
+
+.instructions-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.instructions-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--skoda-text);
+  margin-bottom: 8px;
+}
+
+.instructions-header p {
+  font-size: 16px;
+  color: var(--skoda-grey-dark);
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.instruction-card {
+  background: var(--skoda-grey-light);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  border-left: 4px solid var(--skoda-green);
+}
+
+.instruction-number {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background: var(--skoda-green);
+  color: var(--skoda-white);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: var(--shadow-md);
+}
+
+.instruction-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--skoda-text);
+  margin-bottom: 12px;
+}
+
+.instruction-card p {
+  font-size: 14px;
+  color: var(--skoda-grey-dark);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.instruction-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.instruction-card li {
+  font-size: 14px;
+  color: var(--skoda-text);
+  padding: 4px 0;
+  padding-left: 24px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.instruction-card li::before {
+  content: '•';
+  position: absolute;
+  left: 8px;
+  color: var(--skoda-green);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.color-dot.green {
+  background-color: #4BA82E;
+}
+
+.color-dot.black {
+  background-color: #000000;
+}
+
+.color-dot.white {
+  background-color: #FFFFFF;
+  border: 1px solid var(--skoda-grey);
+}
+
+.note {
+  font-style: italic;
+  color: var(--skoda-grey-dark);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.instructions-tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.tip-section {
+  padding: 20px;
+  background: rgba(75, 168, 46, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--skoda-green);
+}
+
+.tip-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--skoda-text);
+  margin-bottom: 12px;
+}
+
+.tip-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tip-section li {
+  font-size: 14px;
+  color: var(--skoda-text);
+  padding: 6px 0;
+  padding-left: 24px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.tip-section li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--skoda-green);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .instructions-content {
+    padding: 24px 16px;
+  }
+
+  .instructions-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .instructions-header h2 {
+    font-size: 24px;
+  }
+
+  .instructions-tips {
+    grid-template-columns: 1fr;
+  }
+}
