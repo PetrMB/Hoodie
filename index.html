@@ -815,10 +815,11 @@
         let faceImage = null;
         let selectedColor = 'green';
         let hoodies = {};
-        // Pre-configured AI settings with embedded API key
+        // AI settings — API klíč se NIKDY neukládá natvrdo do kódu (byl zde dřív commitnutý a unikl).
+        // Uživatel ho zadá ve formuláři AI nastavení; loadAIConfig() ho pak načte z localStorage 'aiConfig'.
         let aiConfig = {
             provider: 'fal',
-            apiKey: 'bcfd7b90-933e-4606-8918-d93e5541a596:2e24d37453737886345a8c55c85e3d7a'
+            apiKey: ''
         };
 
         // IndexedDB Setup
